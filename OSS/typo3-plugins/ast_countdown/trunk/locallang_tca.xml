@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<T3locallang>
+    <meta type="array">
+        <description>Description of flexform fields/ labels.</description>
+        <type>database</type>
+        <csh_table></csh_table>
+        <fileId>EXT:ast_countdown/locallang_tca.xml</fileId>
+        <labelContext type="array">
+        	<label index="ast_countdown.pi_flexform.sheetConfig"></label>
+        	<label index="ast_countdown.pi_flexform.sheetImage"></label>
+            <label index="ast_countdown.pi_flexform.cDate.label"></label>
+            <label index="ast_countdown.pi_flexform.cDayLen.label"></label>
+            <label index="ast_countdown.pi_flexform.cDayLen.label0"></label>
+            <label index="ast_countdown.pi_flexform.cDayLen.label1"></label>
+            <label index="ast_countdown.pi_flexform.cHead.label"></label>
+            <label index="ast_countdown.pi_flexform.imgWidth.label"></label>
+            <label index="ast_countdown.pi_flexform.imgHeight.label"></label>
+            <label index="ast_countdown.pi_flexform.imgPath.label"></label>
+        </labelContext>
+    </meta>
+    <data type="array">
+        <languageKey index="default" type="array">
+        	<label index="ast_countdown.pi_flexform.sheetConfig">Display and Date</label>
+        	<label index="ast_countdown.pi_flexform.sheetImage">Alternative digits</label>
+            <label index="ast_countdown.pi_flexform.cDate.label">The date to count down:</label>
+            <label index="ast_countdown.pi_flexform.cDayLen.label">Day digit length:</label>
+            <label index="ast_countdown.pi_flexform.cDayLen.label0">Show 2 digits</label>
+            <label index="ast_countdown.pi_flexform.cDayLen.label1">Show 3 digits</label>
+            <label index="ast_countdown.pi_flexform.cHead.label">Headline:</label>
+            <label index="ast_countdown.pi_flexform.imgWidth.label">Digit width:</label>
+            <label index="ast_countdown.pi_flexform.imgHeight.label">Digit height:</label>
+            <label index="ast_countdown.pi_flexform.imgPath.label">Digit path:</label>
+        </languageKey>
+        <languageKey index="de" type="array">
+        	<label index="ast_countdown.pi_flexform.sheetConfig">Anzeige und Datum</label>
+        	<label index="ast_countdown.pi_flexform.sheetImage">Alternative Grafiken</label>
+            <label index="ast_countdown.pi_flexform.cDate.label">Datum:</label>
+            <label index="ast_countdown.pi_flexform.cDayLen.label">Anzeige Tage:</label>
+            <label index="ast_countdown.pi_flexform.cDayLen.label0">Zweistellig</label>
+            <label index="ast_countdown.pi_flexform.cDayLen.label1">Dreistellig</label>
+            <label index="ast_countdown.pi_flexform.cHead.label">Überschrift:</label>
+            <label index="ast_countdown.pi_flexform.imgWidth.label">Breite Grafiken:</label>
+            <label index="ast_countdown.pi_flexform.imgHeight.label">Höhe Grafiken:</label>
+            <label index="ast_countdown.pi_flexform.imgPath.label">Pfad zu den Grafiken:</label>
+        </languageKey>
+    </data>
+</T3locallang>
