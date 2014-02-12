@@ -1,19 +1,19 @@
 plugin.tx_astcountdown_pi1 {
-  # cat=ast_countdown/enable/0; type=string; label=Date: The date to count down. Attention! Date must be right for Javascript, count the month beginning at 0! Format: Y,m,d,h,i,s. As example the date is set to 01.01.2010!
-  cDate = 2010,0,1,0,0,0
+  # cat=ast_countdown/enable/0; type=boolean; label=Date: The date to count down. Attention! Date must be formated for Javascript, count the month beginning at 0! Format: Y,m,d,h,i,s.
+  cDate = 2005,8,29,8,0,0
+  
+  # cat=ast_countdown/enable/1; type=string; label=Headline: The Headline in top of the countdown. You can use HTML tags for better formating the text if you want.
+  cHead = <h4>Ernstfall-Countdown</h4><p>Noch <em>Tage : Std. : Min. : Sec.</em> bis zur Wiesn-Tour!</p>
 
-  # cat=ast_countdown/enable/1; type=int+; label=Day digit length: By default the countdown shows two digits for the days. Set this to '3' if you want to have three digits instead (more digits make no sense!).
-  cDayLen = 2
-
-  # cat=ast_countdown/enable/2; type=string; label=Headline: The Headline in top of the countdown. You can use HTML tags for better formating the text if you want.
-  cHead = <h4>Countdown</h4><p>Only <em>days : hours : mins : secs</em> up to the event!</p>
-
-  # cat=ast_countdown/dims/0; type=int+; label=Digit width: Width of the digit images you can use alternatively.
+  # cat=ast_countdown/dims/0; type=int+; label=Digit width: Width of the digit images.
   imgWidth = 16
-
-  # cat=ast_countdown/dims/1; type=int+; label=Digit height: Height of the digit images you can use alternatively.
+  
+  # cat=ast_countdown/dims/1; type=int+; label=Digit height: Height of the digit images.
   imgHeight = 22
+    
+  # cat=ast_countdown//0; type=string; label=Digit path: Path to your own alternative digit images.
+  imgPath = 
 
-  # cat=ast_countdown/file/0; type=string; label=Digit path: Absolute path to your own alternative digit images.
-  imgPath =
+  # extension of image files / gif by default
+  imgExt =
 }
