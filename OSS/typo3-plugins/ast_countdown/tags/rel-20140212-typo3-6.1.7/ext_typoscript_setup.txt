@@ -1,0 +1,8 @@
+plugin.tx_astcountdown_pi1 {
+  cDate = {$plugin.tx_astcountdown_pi1.cDate}
+  cDayLen = {$plugin.tx_astcountdown_pi1.cDayLen}
+  cHead = {$plugin.tx_astcountdown_pi1.cHead}
+  imgWidth = {$plugin.tx_astcountdown_pi1.imgWidth}
+  imgHeight = {$plugin.tx_astcountdown_pi1.imgHeight}
+  imgPath = {$plugin.tx_astcountdown_pi1.imgPath}
+}
