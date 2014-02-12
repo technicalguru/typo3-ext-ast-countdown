@@ -2,7 +2,7 @@
 	/***************************************************************
 	*  Copyright notice
 	*
-	*  (c) 2005 Andre Steiling (steiling@pilotprojekt.com)
+	*  (c) 2004 Andre Steiling (steiling@pilotprojekt.com)
 	*  All rights reserved
 	*
 	*  This script is part of the TYPO3 project. The TYPO3 project is
@@ -26,114 +26,103 @@
 	*
 	* @author Andre Steiling <steiling@pilotprojekt.com>
 	*/
-
-
+	 
+	
 	require_once(PATH_tslib.'class.tslib_pibase.php');
-
+	 
 	class tx_astcountdown_pi1 extends tslib_pibase {
 		var $prefixId = 'tx_astcountdown_pi1';
 		// Same as class name
 		var $scriptRelPath = 'pi1/class.tx_astcountdown_pi1.php'; // Path to this script relative to the extension dir.
 		var $extKey = 'ast_countdown'; // The extension key.
-
-
+		
+		 
 		/**
-		 * [Put your description here]
-		 *
-		 * @param	[type]		$content: ...
-		 * @param	[type]		$conf: ...
-		 * @return	[type]		...
-		 */
+		* [Put your description here]
+		*/
 		function main($content, $conf) {
 			$this->conf = $conf;
 			$this->pi_setPiVarDefaults();
-		##	$this->pi_loadLL();
-		##	$this->pi_USER_INT_obj = 1; // Configuring so caching is not expected. This value means that no cHash params are ever set. We do this, because it's a USER_INT object!
+			$this->pi_loadLL();
+			
+			// Conf
+			$cDate     = $this->conf['cDate']!=''?$this->conf['cDate']:time();
+			if ($this->datePassed($cDate)) return '';
 
-			// Parse XML data into php array
-			$this->pi_initPIflexForm();
-			$fxDateRaw	= $this->pi_getFFvalue($this->cObj->data['pi_flexform'], 'cDate', 'sConfig');
-			// Some nasty stuff ... quick and dirty
-			if ($fxDateRaw) {
-				$fxDatePHP = date('Y,M,d,H,i,s', $fxDateRaw);
-				$arrDate	= array('Jan' => 0, 'Feb' => 1, 'Mar' => 2, 'Apr' => 3, 'May' => 4, 'Jun' => 5, 'Jul' => 6, 'Aug' => 7, 'Sep' => 8, 'Oct' => 9, 'Nov' => 10, 'Dec' => 11);
-				$arrExp		= explode(',', $fxDatePHP);
-				$fxDate		= str_replace($arrExp[1], $arrDate[$arrExp[1]] ,$fxDatePHP);
-			}
+			$imgPath   = $this->conf['imgPath']!=''?$this->conf['imgPath']:t3lib_extMgm::siteRelPath('ast_countdown').'pi1/digits/';
+			$imgWidth  = $this->conf['imgWidth']!=''?$this->conf['imgWidth']:16;
+			$imgHeight = $this->conf['imgHeight']!=''?$this->conf['imgHeight']:22;
+			$imgExt    = $this->conf['imgExt']!=''?$this->conf['imgExt']:'gif';
+			$doText    = $this->conf['doText']!=''?$this->conf['doText']:0;
 
-			$fxDayLen	= $this->pi_getFFvalue($this->cObj->data['pi_flexform'], 'cDayLen', 'sConfig');
-			$fxHead		= $this->pi_getFFvalue($this->cObj->data['pi_flexform'], 'cHead', 'sConfig');
-			$fxPath		= $this->pi_getFFvalue($this->cObj->data['pi_flexform'], 'imgPath', 'sImage');
-			$fxWidth	= $this->pi_getFFvalue($this->cObj->data['pi_flexform'], 'imgWidth', 'sImage');
-			$fxHeight	= $this->pi_getFFvalue($this->cObj->data['pi_flexform'], 'imgHeight', 'sImage');
+			$graphCounter = "
+				counter  = '<'+'img name=\"b0\" src=\"".$imgPath."c0.".$imgExt."\" width=\"'+vWidth+'\" height=\"'+vHeight+'\" alt=\"\" />';
+				counter += '<'+'img name=\"b1\" src=\"".$imgPath."c0.".$imgExt."\" width=\"'+vWidth+'\" height=\"'+vHeight+'\" alt=\"\" />';
+				counter += '<'+'img name=\"b2\" src=\"".$imgPath."c0.".$imgExt."\" width=\"'+vWidth+'\" height=\"'+vHeight+'\" alt=\"\" />';
+				counter += '<'+'img src=\"".$imgPath."ct.".$imgExt."\" width=\"'+vWidth+'\" height=\"'+vHeight+'\" alt=\"\" />';
+				counter += '<'+'img name=\"b3\" src=\"".$imgPath."c0.".$imgExt."\" width=\"'+vWidth+'\" height=\"'+vHeight+'\" alt=\"\" />';
+				counter += '<'+'img name=\"b4\" src=\"".$imgPath."c0.".$imgExt."\" width=\"'+vWidth+'\" height=\"'+vHeight+'\" alt=\"\" />';
+				counter += '<'+'img src=\"".$imgPath."ct.".$imgExt."\" width=\"'+vWidth+'\" height=\"'+vHeight+'\" alt=\"\" />';
+				counter += '<'+'img name=\"b5\" src=\"".$imgPath."c0.".$imgExt."\" width=\"'+vWidth+'\" height=\"'+vHeight+'\" alt=\"\" />';
+				counter += '<'+'img name=\"b6\" src=\"".$imgPath."c0.".$imgExt."\" width=\"'+vWidth+'\" height=\"'+vHeight+'\" alt=\"\" />';
+				counter += '<'+'img src=\"".$imgPath."ct.".$imgExt."\" width=\"'+vWidth+'\" height=\"'+vHeight+'\" alt=\"\" />';
+				counter += '<'+'img name=\"b7\" src=\"".$imgPath."c0.".$imgExt."\" width=\"'+vWidth+'\" height=\"'+vHeight+'\" alt=\"\" />';
+				counter += '<'+'img name=\"b8\" src=\"".$imgPath."c0.".$imgExt."\" width=\"'+vWidth+'\" height=\"'+vHeight+'\" alt=\"\" />';
+			";
 
-			// Config
-			$cDate		= $fxDate?$fxDate:($this->conf['cDate']!=''?$this->conf['cDate']:date('Y,m,d,H,i,s', time()));
-			$cDayLen	= $fxDayLen?$fxDayLen:($this->conf['cDayLen']!=''?$this->conf['cDayLen']:2);
-			$cHead		= $fxHead?$fxHead:$this->conf['cHead'];
-			$imgPath	= $fxPath?$fxPath:($this->conf['imgPath']!=''?$this->conf['imgPath']:t3lib_extMgm::siteRelPath('ast_countdown').'pi1/digits/');
-			$imgWidth	= $fxWidth?$fxWidth:($this->conf['imgWidth']!=''?$this->conf['imgWidth']:16);
-			$imgHeight	= $fxHeight?$fxHeight:($this->conf['imgHeight']!=''?$this->conf['imgHeight']:22);
-
-			if ($cDayLen == 3) {
-				$counter = "counter = '<img name=\"b0\" src=\"".$imgPath."c0.gif\" width=\"'+vWidth+'\" height=\"'+vHeight+'\" alt=\"\" />';
-				counter += '<img name=\"b1\" src=\"".$imgPath."c0.gif\" width=\"'+vWidth+'\" height=\"'+vHeight+'\" alt=\"\" />';
-				counter += '<img name=\"b2\" src=\"".$imgPath."c0.gif\" width=\"'+vWidth+'\" height=\"'+vHeight+'\" alt=\"\" />';
-				counter += '<img src=\"".$imgPath."ctd.gif\" alt=\"\" />';
-				counter += '<img name=\"b3\" src=\"".$imgPath."c0.gif\" width=\"'+vWidth+'\" height=\"'+vHeight+'\" alt=\"\" />';
-				counter += '<img name=\"b4\" src=\"".$imgPath."c0.gif\" width=\"'+vWidth+'\" height=\"'+vHeight+'\" alt=\"\" />';
-				counter += '<img src=\"".$imgPath."cth.gif\" alt=\"\" />';
-				counter += '<img name=\"b5\" src=\"".$imgPath."c0.gif\" width=\"'+vWidth+'\" height=\"'+vHeight+'\" alt=\"\" />';
-				counter += '<img name=\"b6\" src=\"".$imgPath."c0.gif\" width=\"'+vWidth+'\" height=\"'+vHeight+'\" alt=\"\" />';
-				counter += '<img src=\"".$imgPath."ctm.gif\" alt=\"\" />';
-				counter += '<img name=\"b7\" src=\"".$imgPath."c0.gif\" width=\"'+vWidth+'\" height=\"'+vHeight+'\" alt=\"\" />';
-				counter += '<img name=\"b8\" src=\"".$imgPath."c0.gif\" width=\"'+vWidth+'\" height=\"'+vHeight+'\" alt=\"\" />';";
-			} else {
-				$counter = "counter = '<img name=\"b0\" src=\"".$imgPath."c0.gif\" width=\"'+vWidth+'\" height=\"'+vHeight+'\" alt=\"\" />';
-				counter += '<img name=\"b1\" src=\"".$imgPath."c0.gif\" width=\"'+vWidth+'\" height=\"'+vHeight+'\" alt=\"\" />';
-				counter += '<img src=\"".$imgPath."ctd.gif\" alt=\"\" />';
-				counter += '<img name=\"b2\" src=\"".$imgPath."c0.gif\" width=\"'+vWidth+'\" height=\"'+vHeight+'\" alt=\"\" />';
-				counter += '<img name=\"b3\" src=\"".$imgPath."c0.gif\" width=\"'+vWidth+'\" height=\"'+vHeight+'\" alt=\"\" />';
-				counter += '<img src=\"".$imgPath."cth.gif\" alt=\"\" />';
-				counter += '<img name=\"b4\" src=\"".$imgPath."c0.gif\" width=\"'+vWidth+'\" height=\"'+vHeight+'\" alt=\"\" />';
-				counter += '<img name=\"b5\" src=\"".$imgPath."c0.gif\" width=\"'+vWidth+'\" height=\"'+vHeight+'\" alt=\"\" />';
-				counter += '<img src=\"".$imgPath."ctm.gif\" alt=\"\" />';
-				counter += '<img name=\"b6\" src=\"".$imgPath."c0.gif\" width=\"'+vWidth+'\" height=\"'+vHeight+'\" alt=\"\" />';
-				counter += '<img name=\"b7\" src=\"".$imgPath."c0.gif\" width=\"'+vWidth+'\" height=\"'+vHeight+'\" alt=\"\" />';";
-			}
-
+			$textCounter = "
+				counter  = '<img name=\"b0\" src=\"".$imgPath."c0.".$imgExt."\" width=\"'+vWidth+'\" height=\"'+vHeight+'\" alt=\"\" />';
+				counter += '<img name=\"b1\" src=\"".$imgPath."c0.".$imgExt."\" width=\"'+vWidth+'\" height=\"'+vHeight+'\" alt=\"\" />';
+				counter += '<img name=\"b2\" src=\"".$imgPath."c0.".$imgExt."\" width=\"'+vWidth+'\" height=\"'+vHeight+'\" alt=\"\" />';
+				counter += ' d ';
+				counter += '<img name=\"b3\" src=\"".$imgPath."c0.".$imgExt."\" width=\"'+vWidth+'\" height=\"'+vHeight+'\" alt=\"\" />';
+				counter += '<img name=\"b4\" src=\"".$imgPath."c0.".$imgExt."\" width=\"'+vWidth+'\" height=\"'+vHeight+'\" alt=\"\" />';
+				counter += ' h ';
+				counter += '<img name=\"b5\" src=\"".$imgPath."c0.".$imgExt."\" width=\"'+vWidth+'\" height=\"'+vHeight+'\" alt=\"\" />';
+				counter += '<img name=\"b6\" src=\"".$imgPath."c0.".$imgExt."\" width=\"'+vWidth+'\" height=\"'+vHeight+'\" alt=\"\" />';
+				counter += ' min ';
+				counter += '<img name=\"b7\" src=\"".$imgPath."c0.".$imgExt."\" width=\"'+vWidth+'\" height=\"'+vHeight+'\" alt=\"\" />';
+				counter += '<img name=\"b8\" src=\"".$imgPath."c0.".$imgExt."\" width=\"'+vWidth+'\" height=\"'+vHeight+'\" alt=\"\" /> sec';
+			";
 			$GLOBALS['TSFE']->additionalHeaderData['tx_astcountdown_pi1']  = "
-			<script type=\"text/javascript\">
-				/*<![CDATA[*/
-			<!--
-				var evtDate = new Date(".$cDate.");
+				<script type=\"text/javascript\">
+					/*<![CDATA[*/
+				<!--
+				var locDate = new Date();
+				var evtDate = new Date(locDate.getTime() + ".(($cDate-time())*1000-1000).");
 				var vWidth  = ".$imgWidth.";
 				var vHeight = ".$imgHeight.";
 				var imgPath = '".$imgPath."';
-				var vDayLen = ".$cDayLen.";
-				counter     = ".$counter.";
-
-			// -->
-				/*]]>*/
+				var imgExt = '".$imgExt."';
+				".($doText ? $textCounter : $graphCounter)."
+				// -->
+					/*]]>*/
 			</script>";
 			$GLOBALS['TSFE']->additionalHeaderData['tx_astcountdown_pi1'] .= '<script type="text/javascript" src="'.t3lib_extMgm::siteRelPath('ast_countdown').'pi1/tx_astcountdown_pi1.js"></script>'.chr(10);
 
 			$content = '
-			'.$cHead.'
-			<script type="text/javascript">
-				/*<![CDATA[*/
-			<!--
+				'.$this->conf['cHead'].'
+				<script type="text/javascript">
+					/*<![CDATA[*/
+				<!--
 				document.write(counter);
 				countDown();
-			// -->
-				/*]]>*/
-			</script>';
+				// -->
+					/*]]>*/
+				</script>
+				'.$this->conf['cFoot'].'
+			';
 			return $this->pi_wrapInBaseClass($content);
 		}
+
+		function datePassed($datum) {
+			if ($datum <= time()) return true;
+			return false;
+		}
 	}
-
-
+	
+	
 	if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/ast_countdown/pi1/class.tx_astcountdown_pi1.php']) {
 		include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/ast_countdown/pi1/class.tx_astcountdown_pi1.php']);
-	}
+	} 
 ?>

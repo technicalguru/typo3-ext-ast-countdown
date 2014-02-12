@@ -11,10 +11,24 @@
     </meta>
     <data type="array">
         <languageKey index="default" type="array">
-            <label index="tt_content.list_type_pi1">AST Countdown</label>
+            <label index="tt_content.list_type_pi1">Countdown</label>
         </languageKey>
         <languageKey index="de" type="array">
-            <label index="tt_content.list_type_pi1">AST Countdown</label>
+            <label index="tt_content.list_type_pi1">Countdown</label>
         </languageKey>
     </data>
+    <orig_hash type="array">
+        <languageKey index="default" type="array">
+            <label index="tt_content.list_type_pi1" type="integer">241452637</label>
+        </languageKey>
+        <languageKey index="de" type="array">
+            <label index="tt_content.list_type_pi1" type="integer">241452637</label>
+        </languageKey>
+    </orig_hash>
+    <orig_text type="array">
+        <languageKey index="default" type="array">
+        </languageKey>
+        <languageKey index="de" type="array">
+        </languageKey>
+    </orig_text>
 </T3locallang>
